@@ -22,7 +22,10 @@ class PackageController extends Controller
             'hotel_id' => 'nullable|exists:hotels,id',
         ]);
 
-        $package = Package::create($validatedData);
+        $package = new Package($validatedData);
+        $package->total_cost = $package->calculateTotalCost();
+        $package->total_price = $package->calculateTotalPrice();
+        $package->save();
         return response()->json($package, 201);
     }
 
@@ -40,7 +43,10 @@ class PackageController extends Controller
             'hotel_id' => 'nullable|exists:hotels,id',
         ]);
 
-        $package->update($validatedData);
+        $package->fill($validatedData);
+        $package->total_cost = $package->calculateTotalCost();
+        $package->total_price = $package->calculateTotalPrice();
+        $package->save();
         return response()->json($package);
     }
 

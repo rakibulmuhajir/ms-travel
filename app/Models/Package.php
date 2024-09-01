@@ -11,6 +11,32 @@ class Package extends Model
 
     protected $fillable = ['client_id', 'total_cost', 'total_price', 'status'];
 
+    public function calculateTotalCost()
+    {
+        $totalCost = 0;
+        foreach ($this->tickets as $ticket) {
+            $totalCost += $ticket->cost;
+        }
+        foreach ($this->visas as $visa) {
+            $totalCost += $visa->cost;
+        }
+        foreach ($this->hotels as $hotel) {
+            $totalCost += $hotel->cost;
+        }
+        return $totalCost;
+    }
+
+    public function calculateTotalPrice()
+    {
+        // Assuming the total price is set by the user or calculated based on some logic
+        return $this->total_price;
+    }
+
+    public function calculateProfit()
+    {
+        return $this->calculateTotalPrice() - $this->calculateTotalCost();
+    }
+
     public function client()
     {
         return $this->belongsTo(Client::class);
