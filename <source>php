@@ -1,0 +1,146 @@
+@extends('layouts.app')
+
+@section('title', 'Invoices')
+
+@section('content')
+    <h1>Invoices</h1>
+    <a href="{{ route('invoices.create') }}" class="btn btn-primary mb-3">Add New Invoice</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Invoice Number</th>
+                <th>Client</th>
+                <th>Invoice Date</th>
+                <th>Due Date</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($invoices as $invoice)
+                <tr>
+                    <td>{{ $invoice->id }}</td>
+                    <td>{{ $invoice->invoice_number }}</td>
+                    <td>{{ $invoice->client->name }}</td>
+                    <td>{{ $invoice->invoice_date }}</td>
+                    <td>{{ $invoice->due_date }}</td>
+                    <td>{{ $invoice->total_amount }}</td>
+                    <td>{{ $invoice->status }}</td>
+                    <td>
+                        <a href="{{ route('invoices.show', $invoice) }}" class="btn btn-sm btn-info">View</a>
+                        <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('invoices.destroy', $invoice) }}" method="POST" style="display: inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@endsection
+@extends('layouts.app')
+
+@section('title', 'Create Invoice')
+
+@section('content')
+    <h1>Create Invoice</h1>
+    <form action="{{ route('invoices.store') }}" method="POST">
+        @csrf
+        <div class="mb-3">
+            <label for="client_id" class="form-label">Client</label>
+            <select name="client_id" class="form-control" required>
+                @foreach($clients as $client)
+                    <option value="{{ $client->id }}">{{ $client->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="invoice_number" class="form-label">Invoice Number</label>
+            <input type="text" class="form-control" id="invoice_number" name="invoice_number" required>
+        </div>
+        <div class="mb-3">
+            <label for="invoice_date" class="form-label">Invoice Date</label>
+            <input type="date" class="form-control" id="invoice_date" name="invoice_date" required>
+        </div>
+        <div class="mb-3">
+            <label for="due_date" class="form-label">Due Date</label>
+            <input type="date" class="form-control" id="due_date" name="due_date" required>
+        </div>
+        <div class="mb-3">
+            <label for="total_amount" class="form-label">Total Amount</label>
+            <input type="number" class="form-control" id="total_amount" name="total_amount" required>
+        </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <input type="text" class="form-control" id="status" name="status" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Invoice</button>
+    </form>
+@endsection
+@extends('layouts.app')
+
+@section('title', 'Edit Invoice')
+
+@section('content')
+    <h1>Edit Invoice</h1>
+    <form action="{{ route('invoices.update', $invoice->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <div class="mb-3">
+            <label for="client_id" class="form-label">Client</label>
+            <select name="client_id" class="form-control" required>
+                @foreach($clients as $client)
+                    <option value="{{ $client->id }}" {{ $client->id == $invoice->client_id ? 'selected' : '' }}>{{ $client->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="invoice_number" class="form-label">Invoice Number</label>
+            <input type="text" class="form-control" id="invoice_number" name="invoice_number" value="{{ $invoice->invoice_number }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="invoice_date" class="form-label">Invoice Date</label>
+            <input type="date" class="form-control" id="invoice_date" name="invoice_date" value="{{ $invoice->invoice_date }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="due_date" class="form-label">Due Date</label>
+            <input type="date" class="form-control" id="due_date" name="due_date" value="{{ $invoice->due_date }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="total_amount" class="form-label">Total Amount</label>
+            <input type="number" class="form-control" id="total_amount" name="total_amount" value="{{ $invoice->total_amount }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <input type="text" class="form-control" id="status" name="status" value="{{ $invoice->status }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Invoice</button>
+    </form>
+@endsection
+@extends('layouts.app')
+
+@section('title', 'Invoice Details')
+
+@section('content')
+    <h1>Invoice Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Invoice Number: {{ $invoice->invoice_number }}</h5>
+            <p class="card-text"><strong>Client:</strong> {{ $invoice->client->name }}</p>
+            <p class="card-text"><strong>Invoice Date:</strong> {{ $invoice->invoice_date }}</p>
+            <p class="card-text"><strong>Due Date:</strong> {{ $invoice->due_date }}</p>
+            <p class="card-text"><strong>Total Amount:</strong> {{ $invoice->total_amount }}</p>
+            <p class="card-text"><strong>Status:</strong> {{ $invoice->status }}</p>
+            <a href="{{ route('invoices.edit', $invoice->id) }}" class="btn btn-warning">Edit</a>
+            <form action="{{ route('invoices.destroy', $invoice->id) }}" method="POST" style="display: inline-block;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+            </form>
+        </div>
+    </div>
+@endsection
