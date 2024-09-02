@@ -10,11 +10,13 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\PassengerController;
 
 Route::get('/', function () {
     return view('dashboard');
 })->name('dashboard');
 
+// Resource routes for all models
 Route::resource('clients', ClientController::class);
 Route::resource('vendors', VendorController::class);
 Route::resource('tickets', TicketController::class);
@@ -24,3 +26,4 @@ Route::resource('packages', PackageController::class);
 Route::resource('invoices', InvoiceController::class);
 Route::resource('bills', BillController::class);
 Route::resource('transactions', TransactionController::class);
+Route::resource('passengers', PassengerController::class);

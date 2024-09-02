@@ -11,9 +11,15 @@ return new class extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')->constrained();
+            $table->foreignId('passenger_id')->constrained();
+            $table->foreignId('invoice_id')->nullable()->constrained();
+            $table->foreignId('bill_id')->nullable()->constrained();
             $table->decimal('total_cost', 10, 2);
             $table->decimal('total_price', 10, 2);
             $table->string('status');
+            $table->boolean('has_visa')->default(false);
+            $table->boolean('has_ticket')->default(false);
+            $table->boolean('has_hotel')->default(false);
             $table->timestamps();
         });
     }

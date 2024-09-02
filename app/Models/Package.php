@@ -9,19 +9,29 @@ class Package extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['client_id', 'total_cost', 'total_price', 'status'];
+    protected $fillable = [
+        'client_id', 'passenger_id', 'invoice_id', 'bill_id',
+        'total_cost', 'total_price', 'status',
+        'has_visa', 'has_ticket', 'has_hotel'
+    ];
+
+    protected $casts = [
+        'has_visa' => 'boolean',
+        'has_ticket' => 'boolean',
+        'has_hotel' => 'boolean',
+    ];
 
     public function calculateTotalCost()
     {
         $totalCost = 0;
-        foreach ($this->tickets as $ticket) {
-            $totalCost += $ticket->cost;
+        if ($this->has_ticket) {
+            $totalCost += $this->tickets->sum('cost');
         }
-        foreach ($this->visas as $visa) {
-            $totalCost += $visa->cost;
+        if ($this->has_visa) {
+            $totalCost += $this->visas->sum('cost');
         }
-        foreach ($this->hotels as $hotel) {
-            $totalCost += $hotel->cost;
+        if ($this->has_hotel) {
+            $totalCost += $this->hotels->sum('cost');
         }
         return $totalCost;
     }
@@ -40,6 +50,21 @@ class Package extends Model
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function passenger()
+    {
+        return $this->belongsTo(Passenger::class);
+    }
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+
+    public function bill()
+    {
+        return $this->belongsTo(Bill::class);
     }
 
     public function tickets()

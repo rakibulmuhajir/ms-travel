@@ -10,12 +10,15 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->constrained();
+            $table->unsignedBigInteger('transactionable_id');
+            $table->string('transactionable_type');
             $table->decimal('amount', 10, 2);
-            $table->string('type'); // 'income' or 'expense'
-            $table->text('description')->nullable();
+            $table->enum('type', ['debit', 'credit']);
             $table->date('transaction_date');
+            $table->string('description')->nullable();
             $table->timestamps();
+
+            $table->index(['transactionable_type', 'transactionable_id']);
         });
     }
 

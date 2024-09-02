@@ -9,14 +9,9 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['client_id', 'amount', 'type', 'description', 'transaction_date'];
+    protected $fillable = ['amount', 'type', 'transaction_date', 'description'];
 
     protected $dates = ['transaction_date'];
-
-    public function client()
-    {
-        return $this->belongsTo(Client::class);
-    }
 
     public function transactionable()
     {
