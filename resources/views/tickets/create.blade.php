@@ -12,7 +12,22 @@
         </div>
         <div class="mb-3">
             <label for="airline" class="form-label">Airline</label>
-            <input type="text" class="form-control" id="airline" name="airline" required>
+            <select class="form-control" id="airline" name="airline" required>
+                <option value="PIA">PIA (PK)</option>
+                <option value="Airblue">Airblue (PA)</option>
+                <option value="Saudia">Saudia (SV)</option>
+                <option value="Etihad">Etihad (EY)</option>
+                <option value="Air Arabia">Air Arabia (G9)</option>
+                <option value="Fly Dubai">Fly Dubai (FZ)</option>
+                <option value="Serene Air">Serene Air (ER)</option>
+                <option value="Air Sial">Air Sial (PF)</option>
+                <option value="Fly Jinnah">Fly Jinnah (9P)</option>
+                <option value="Emirates">Emirates (EK)</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="number_of_people" class="form-label">Number of People</label>
+            <input type="number" class="form-control" id="number_of_people" name="number_of_people" required min="1">
         </div>
         <div class="mb-3">
             <label for="outbound" class="form-label">Outbound</label>

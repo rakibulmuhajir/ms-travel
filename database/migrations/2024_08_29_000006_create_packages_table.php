@@ -12,8 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('client_id')->constrained();
             $table->foreignId('passenger_id')->constrained();
-            $table->foreignId('invoice_id')->nullable()->constrained();
-            $table->foreignId('bill_id')->nullable()->constrained();
+            $table->unsignedBigInteger('invoice_id')->nullable();
+            $table->unsignedBigInteger('bill_id')->nullable();
             $table->decimal('total_cost', 10, 2);
             $table->decimal('total_price', 10, 2);
             $table->string('status');

@@ -13,7 +13,22 @@
         </div>
         <div class="mb-3">
             <label for="airline" class="form-label">Airline</label>
-            <input type="text" class="form-control" id="airline" name="airline" value="{{ $ticket->airline }}" required>
+            <select class="form-control" id="airline" name="airline" required>
+                <option value="PIA" {{ $ticket->airline == 'PIA' ? 'selected' : '' }}>PIA (PK)</option>
+                <option value="Airblue" {{ $ticket->airline == 'Airblue' ? 'selected' : '' }}>Airblue (PA)</option>
+                <option value="Saudia" {{ $ticket->airline == 'Saudia' ? 'selected' : '' }}>Saudia (SV)</option>
+                <option value="Etihad" {{ $ticket->airline == 'Etihad' ? 'selected' : '' }}>Etihad (EY)</option>
+                <option value="Air Arabia" {{ $ticket->airline == 'Air Arabia' ? 'selected' : '' }}>Air Arabia (G9)</option>
+                <option value="Fly Dubai" {{ $ticket->airline == 'Fly Dubai' ? 'selected' : '' }}>Fly Dubai (FZ)</option>
+                <option value="Serene Air" {{ $ticket->airline == 'Serene Air' ? 'selected' : '' }}>Serene Air (ER)</option>
+                <option value="Air Sial" {{ $ticket->airline == 'Air Sial' ? 'selected' : '' }}>Air Sial (PF)</option>
+                <option value="Fly Jinnah" {{ $ticket->airline == 'Fly Jinnah' ? 'selected' : '' }}>Fly Jinnah (9P)</option>
+                <option value="Emirates" {{ $ticket->airline == 'Emirates' ? 'selected' : '' }}>Emirates (EK)</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="number_of_people" class="form-label">Number of People</label>
+            <input type="number" class="form-control" id="number_of_people" name="number_of_people" value="{{ $ticket->number_of_people }}" required min="1">
         </div>
         <div class="mb-3">
             <label for="outbound" class="form-label">Outbound</label>

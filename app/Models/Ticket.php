@@ -9,7 +9,7 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['pnr', 'airline', 'outbound', 'inbound', 'cost', 'price', 'vendor_id'];
+    protected $fillable = ['pnr', 'airline', 'outbound', 'inbound', 'cost', 'price', 'vendor_id', 'number_of_people'];
 
     protected $dates = ['outbound', 'inbound'];
 

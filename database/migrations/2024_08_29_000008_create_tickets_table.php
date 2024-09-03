@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('pnr');
             $table->string('airline');
+            $table->unsignedInteger('number_of_people');
             $table->dateTime('outbound');
             $table->dateTime('inbound')->nullable();
             $table->decimal('cost', 10, 2);
